@@ -1,23 +1,24 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { searchRouter } from "./routers/search";
 import { publicProcedure, router } from "./_core/trpc";
+import { exportRouter } from "./routers/export";
 import { agentRouter } from "./routers/agent";
 import { webhookRouter } from "./routers/webhooks";
 import { templatesRouter } from "./routers/templates";
 import { tokenUsageRouter } from "./routers/tokenUsage";
+import { searchRouter } from "./routers/search";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
-  search: searchRouter,
+  export: exportRouter,
   agent: agentRouter,
   webhooks: webhookRouter,
   templates: templatesRouter,
   tokenUsage: tokenUsageRouter,
+  search: searchRouter,
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
@@ -26,13 +27,6 @@ export const appRouter = router({
       } as const;
     }),
   }),
-
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -9,6 +9,7 @@ import Templates from "./pages/Templates";
 import Analytics from "./pages/Analytics";
 import Webhooks from "./pages/Webhooks";
 import Search from "./pages/Search";
+import Export from "./pages/Export";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -19,6 +20,7 @@ function Router() {
       <Route path={"/analytics"} component={Analytics} />
       <Route path={"/webhooks"} component={Webhooks} />
       <Route path={"/search"} component={Search} />
+      <Route path={"/export"} component={Export} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
