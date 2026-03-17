@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -96,3 +96,47 @@ export const conversationHistory = mysqlTable("conversationHistory", {
 
 export type ConversationMessage = typeof conversationHistory.$inferSelect;
 export type InsertConversationMessage = typeof conversationHistory.$inferInsert;
+
+/**
+ * Webhooks table - Stores webhook configurations
+ */
+export const webhooks = mysqlTable("webhooks", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  url: varchar("url", { length: 2048 }).notNull(),
+  secret: text("secret"), // HMAC secret for signing
+  events: text("events").notNull(), // JSON array of event types
+  filters: text("filters"), // JSON object for filtering
+  retryPolicy: text("retryPolicy"), // JSON object with retry config
+  isActive: boolean("isActive").default(true).notNull(),
+  lastDeliveryAt: timestamp("lastDeliveryAt"),
+  successCount: int("successCount").default(0).notNull(),
+  failureCount: int("failureCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Webhook = typeof webhooks.$inferSelect;
+export type InsertWebhook = typeof webhooks.$inferInsert;
+
+/**
+ * Webhook deliveries table - Logs webhook delivery attempts
+ */
+export const webhookDeliveries = mysqlTable("webhookDeliveries", {
+  id: int("id").autoincrement().primaryKey(),
+  webhookId: int("webhookId").notNull().references(() => webhooks.id),
+  eventType: varchar("eventType", { length: 64 }).notNull(),
+  eventData: text("eventData").notNull(), // JSON payload
+  status: mysqlEnum("status", ["pending", "success", "failed", "retrying"]).default("pending").notNull(),
+  httpStatus: int("httpStatus"),
+  responseBody: text("responseBody"),
+  error: text("error"),
+  attemptCount: int("attemptCount").default(0).notNull(),
+  nextRetryAt: timestamp("nextRetryAt"),
+  duration: int("duration"), // milliseconds
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+});
+
+export type WebhookDelivery = typeof webhookDeliveries.$inferSelect;
+export type InsertWebhookDelivery = typeof webhookDeliveries.$inferInsert;

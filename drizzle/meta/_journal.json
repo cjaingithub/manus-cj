@@ -15,6 +15,13 @@
       "when": 1773766770295,
       "tag": "0001_slim_vision",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1773769452154,
+      "tag": "0002_mute_cerebro",
+      "breakpoints": true
     }
   ]
 }
