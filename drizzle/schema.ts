@@ -254,3 +254,21 @@ export const notificationPreferences = mysqlTable("notificationPreferences", {
 
 export type NotificationPreference = typeof notificationPreferences.$inferSelect;
 export type InsertNotificationPreference = typeof notificationPreferences.$inferInsert;
+
+/**
+ * Task Retry History table - Tracks retry attempts for tasks
+ */
+export const taskRetryHistory = mysqlTable("taskRetryHistory", {
+  id: int("id").autoincrement().primaryKey(),
+  taskId: int("taskId").notNull().references(() => tasks.id),
+  attemptNumber: int("attemptNumber").notNull(),
+  success: boolean("success").notNull(),
+  error: text("error"), // Error message if attempt failed
+  delayMs: int("delayMs"), // Delay before this attempt
+  metadata: text("metadata"), // JSON metadata about the attempt
+  attemptedAt: timestamp("attemptedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type TaskRetryHistory = typeof taskRetryHistory.$inferSelect;
+export type InsertTaskRetryHistory = typeof taskRetryHistory.$inferInsert;

@@ -11,6 +11,7 @@ import { searchRouter } from "./routers/search";
 import { historyRouter } from "./routers/history";
 import { notificationsRouter } from "./routers/notifications";
 import { notificationPreferencesRouter } from "./routers/notificationPreferences";
+import { taskRetryRouter } from "./routers/taskRetry";
 
 export const appRouter = router({
   system: systemRouter,
@@ -23,6 +24,7 @@ export const appRouter = router({
   history: historyRouter,
   notifications: notificationsRouter,
   notificationPreferences: notificationPreferencesRouter,
+  taskRetry: taskRetryRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
