@@ -1,0 +1,78 @@
+# Hunter Agent Platform - Project TODO
+
+## Core Architecture & Agent Loop
+- [x] Implement agent loop with perception, planning, action, learning phases
+- [x] Create task planning system with DAG/graph structure
+- [x] Build execution engine with phase-based state management
+- [x] Implement context-aware planning using Hunter Alpha
+
+## Tool Registry & Execution
+- [x] Design tool registry interface and metadata system
+- [ ] Implement shell execution tool with timeout and error handling
+- [ ] Implement file system tool (read, write, delete operations)
+- [ ] Implement browser automation tool (basic navigation)
+- [x] Add tool selection and fallback chain logic
+- [x] Create tool execution wrapper with retry logic
+
+## Database Schema & Persistence
+- [x] Design tasks table (id, user_id, status, plan, execution_log)
+- [x] Design checkpoints table (task_id, phase, state, timestamp)
+- [x] Design tool_executions table (task_id, tool_name, params, result, error)
+- [x] Design conversation_history table (task_id, role, content, timestamp)
+- [x] Create database migrations
+
+## WebSocket & Real-Time Communication
+- [ ] Set up WebSocket server with Socket.io or native WebSocket
+- [ ] Implement message types for agent thoughts, tool execution, progress
+- [ ] Create streaming response handler for Hunter Alpha outputs
+- [ ] Build real-time state synchronization between server and client
+- [ ] Implement connection management and reconnection logic
+
+## Error Recovery & Checkpointing
+- [x] Implement checkpoint saving at each phase completion
+- [x] Build checkpoint restoration logic for task resumption
+- [ ] Create error recovery handler with retry strategies
+- [ ] Implement fallback execution paths
+- [ ] Add graceful degradation for failed operations
+- [ ] Build error logging and analysis system
+
+## Frontend UI Components
+- [x] Create chat interface with message history
+- [x] Build task execution visualization component
+- [x] Implement phase progress indicator
+- [x] Create tool execution status display
+- [ ] Build context viewer for current state
+- [x] Add markdown rendering for agent thoughts
+- [x] Implement code syntax highlighting
+- [x] Create pause/resume/abort controls
+
+## Hunter Alpha Integration
+- [x] Set up OpenRouter API client with Hunter Alpha model
+- [x] Create prompt templates for planning and analysis
+- [ ] Implement streaming response handling
+- [x] Build context window management (1M token limit)
+- [ ] Add token usage tracking
+
+## Testing & Validation
+- [ ] Write unit tests for agent loop
+- [x] Write tests for tool registry and execution
+- [ ] Write tests for checkpoint/recovery system
+- [ ] Write tests for error handling
+- [ ] Create integration tests for WebSocket communication
+- [ ] Test long-running task scenarios
+
+## Documentation & Deployment
+- [ ] Write API documentation
+- [ ] Create user guide for task creation
+- [ ] Document tool registry extension points
+- [ ] Write architecture documentation
+- [ ] Create deployment guide
+- [ ] Set up monitoring and logging
+
+## Nice-to-Have Features
+- [ ] Memory hierarchy (working, episodic, semantic)
+- [ ] Token usage dashboard and cost tracking
+- [ ] Performance benchmarking system
+- [ ] Task history and analytics
+- [ ] Parallel task execution
+- [ ] Advanced visualization with D3.js
