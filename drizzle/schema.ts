@@ -224,3 +224,33 @@ export const notifications = mysqlTable("notifications", {
 
 export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = typeof notifications.$inferInsert;
+
+/**
+ * Notification Preferences table - User notification settings
+ */
+export const notificationPreferences = mysqlTable("notificationPreferences", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  // Notification type toggles
+  taskStartedEnabled: boolean("taskStartedEnabled").default(true).notNull(),
+  taskCompletedEnabled: boolean("taskCompletedEnabled").default(true).notNull(),
+  taskFailedEnabled: boolean("taskFailedEnabled").default(true).notNull(),
+  taskPausedEnabled: boolean("taskPausedEnabled").default(true).notNull(),
+  systemAlertEnabled: boolean("systemAlertEnabled").default(true).notNull(),
+  // Quiet hours (in 24-hour format, e.g., "22:00" to "08:00")
+  quietHoursEnabled: boolean("quietHoursEnabled").default(false).notNull(),
+  quietHoursStart: varchar("quietHoursStart", { length: 5 }), // HH:MM format
+  quietHoursEnd: varchar("quietHoursEnd", { length: 5 }), // HH:MM format
+  // Email digest preferences
+  emailDigestEnabled: boolean("emailDigestEnabled").default(false).notNull(),
+  emailDigestFrequency: mysqlEnum("emailDigestFrequency", ["daily", "weekly", "never"]).default("never").notNull(),
+  // Push notification preferences
+  pushNotificationsEnabled: boolean("pushNotificationsEnabled").default(true).notNull(),
+  // Do not disturb mode
+  doNotDisturbEnabled: boolean("doNotDisturbEnabled").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type NotificationPreference = typeof notificationPreferences.$inferSelect;
+export type InsertNotificationPreference = typeof notificationPreferences.$inferInsert;

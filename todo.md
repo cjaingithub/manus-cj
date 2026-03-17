@@ -156,11 +156,14 @@
 - [ ] Show notification statistics and trends
 
 ## Notification Preferences
-- [ ] Add notification preferences table to schema
-- [ ] Create preferences UI in Settings page
-- [ ] Implement notification type toggles
-- [ ] Add quiet hours configuration
-- [ ] Add email digest preferences
+- [x] Add notification preferences table to schema
+- [x] Create preferences UI in Settings page
+- [x] Implement notification type toggles
+- [x] Add quiet hours configuration
+- [x] Add email digest preferences
+- [x] Add push notification preferences
+- [x] Add do not disturb mode
+- [x] Write and pass unit tests for notification preferences
 
 ## Advanced Task Retry Logic
 - [ ] Implement exponential backoff for failed tasks

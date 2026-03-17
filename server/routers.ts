@@ -10,6 +10,7 @@ import { tokenUsageRouter } from "./routers/tokenUsage";
 import { searchRouter } from "./routers/search";
 import { historyRouter } from "./routers/history";
 import { notificationsRouter } from "./routers/notifications";
+import { notificationPreferencesRouter } from "./routers/notificationPreferences";
 
 export const appRouter = router({
   system: systemRouter,
@@ -21,6 +22,7 @@ export const appRouter = router({
   search: searchRouter,
   history: historyRouter,
   notifications: notificationsRouter,
+  notificationPreferences: notificationPreferencesRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
