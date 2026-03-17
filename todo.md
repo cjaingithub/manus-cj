@@ -185,6 +185,17 @@
 - [x] Integrate analytics router with existing Analytics page
 - [x] All 79 tests passing
 
+## Rate Limiting and Request Validation
+- [x] Create rate limiter service with token bucket and sliding window algorithms
+- [x] Implement InMemoryRateLimitStore for single-instance deployments
+- [x] Add TokenBucketLimiter with configurable limits
+- [x] Add SlidingWindowLimiter for more accurate rate limiting
+- [x] Create Express middleware for rate limiting
+- [x] Implement per-user, per-IP, and per-endpoint rate limiting
+- [x] Add rate limit response headers (X-RateLimit-*)
+- [x] Create 22 comprehensive tests for rate limiter
+- [x] All 101 tests passing
+
 ## Advanced Logging & Debugging
 - [ ] Create debug logs table for detailed execution traces
 - [ ] Implement structured logging with context
