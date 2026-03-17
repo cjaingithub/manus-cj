@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Templates from "./pages/Templates";
 import Analytics from "./pages/Analytics";
 import Webhooks from "./pages/Webhooks";
 
@@ -13,6 +14,7 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/templates"} component={Templates} />
       <Route path={"/analytics"} component={Analytics} />
       <Route path={"/webhooks"} component={Webhooks} />
       <Route path={"/404"} component={NotFound} />
@@ -32,6 +34,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="light"
+        // switchable
       >
         <TooltipProvider>
           <Toaster />

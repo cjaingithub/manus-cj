@@ -140,3 +140,45 @@ export const webhookDeliveries = mysqlTable("webhookDeliveries", {
 
 export type WebhookDelivery = typeof webhookDeliveries.$inferSelect;
 export type InsertWebhookDelivery = typeof webhookDeliveries.$inferInsert;
+
+/**
+ * Task templates table - Pre-built task patterns for common use cases
+ */
+export const taskTemplates = mysqlTable("taskTemplates", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id), // null = system template
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  category: varchar("category", { length: 64 }).notNull(), // e.g., "web-scraping", "data-analysis", "report-generation"
+  icon: varchar("icon", { length: 64 }), // icon name for UI
+  taskTemplate: text("taskTemplate").notNull(), // JSON with title, description, plan template
+  parameters: text("parameters"), // JSON schema for template parameters
+  exampleOutput: text("exampleOutput"), // JSON example of expected output
+  usageCount: int("usageCount").default(0).notNull(),
+  rating: int("rating").default(0).notNull(), // average rating 0-5
+  tags: text("tags"), // JSON array of tags
+  isPublic: boolean("isPublic").default(false).notNull(), // system templates are public
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TaskTemplate = typeof taskTemplates.$inferSelect;
+export type InsertTaskTemplate = typeof taskTemplates.$inferInsert;
+
+/**
+ * Template usage logs - Track which templates are used
+ */
+export const templateUsageLogs = mysqlTable("templateUsageLogs", {
+  id: int("id").autoincrement().primaryKey(),
+  templateId: int("templateId").notNull().references(() => taskTemplates.id),
+  taskId: int("taskId").notNull().references(() => tasks.id),
+  userId: int("userId").notNull().references(() => users.id),
+  executionTime: int("executionTime"), // milliseconds
+  success: boolean("success").notNull(),
+  feedback: text("feedback"), // JSON with user feedback
+  rating: int("rating"), // 1-5 star rating
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type TemplateUsageLog = typeof templateUsageLogs.$inferSelect;
+export type InsertTemplateUsageLog = typeof templateUsageLogs.$inferInsert;
