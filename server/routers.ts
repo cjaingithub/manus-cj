@@ -9,6 +9,7 @@ import { templatesRouter } from "./routers/templates";
 import { tokenUsageRouter } from "./routers/tokenUsage";
 import { searchRouter } from "./routers/search";
 import { historyRouter } from "./routers/history";
+import { notificationsRouter } from "./routers/notifications";
 
 export const appRouter = router({
   system: systemRouter,
@@ -19,6 +20,7 @@ export const appRouter = router({
   tokenUsage: tokenUsageRouter,
   search: searchRouter,
   history: historyRouter,
+  notifications: notificationsRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

@@ -201,3 +201,26 @@ export const tokenUsageLogs = mysqlTable("tokenUsageLogs", {
 
 export type TokenUsageLog = typeof tokenUsageLogs.$inferSelect;
 export type InsertTokenUsageLog = typeof tokenUsageLogs.$inferInsert;
+
+/**
+ * Notifications table - Stores user notifications for task events and system alerts
+ */
+export const notifications = mysqlTable("notifications", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  taskId: int("taskId").references(() => tasks.id), // null for system notifications
+  type: mysqlEnum("type", ["task_started", "task_completed", "task_failed", "task_paused", "system_alert", "info"]).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  message: text("message").notNull(),
+  actionUrl: varchar("actionUrl", { length: 2048 }), // URL to navigate to when clicked
+  isRead: boolean("isRead").default(false).notNull(),
+  isDismissed: boolean("isDismissed").default(false).notNull(),
+  priority: mysqlEnum("priority", ["low", "normal", "high"]).default("normal").notNull(),
+  metadata: text("metadata"), // JSON for additional data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  readAt: timestamp("readAt"),
+  dismissedAt: timestamp("dismissedAt"),
+});
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = typeof notifications.$inferInsert;

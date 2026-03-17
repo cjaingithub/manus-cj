@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
+import NotificationCenter from "./NotificationCenter";
 
 interface NavItem {
   label: string;
@@ -83,10 +84,7 @@ export default function DashboardNav() {
         {/* Right Side - Notifications & User */}
         <div className="flex items-center gap-4">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </Button>
+          <NotificationCenter />
 
           {/* User Menu */}
           <DropdownMenu>
@@ -124,10 +122,7 @@ export default function DashboardNav() {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </Button>
+          <NotificationCenter />
 
           <Button
             variant="ghost"
