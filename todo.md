@@ -133,3 +133,11 @@
 - [x] Add statistics cards and pagination
 - [x] Update navigation to include History link
 - [x] Write and pass unit tests for history operations
+
+## Real-Time Notifications
+- [x] Create notifications table with task and system alert types
+- [x] Implement notifications router with 8 tRPC procedures
+- [x] Build NotificationCenter dropdown component
+- [x] Add notification icons and color coding
+- [x] Integrate with DashboardNav header
+- [x] Write and pass unit tests for notifications
