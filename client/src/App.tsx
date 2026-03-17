@@ -13,6 +13,7 @@ import Webhooks from "./pages/Webhooks";
 import Search from "./pages/Search";
 import Export from "./pages/Export";
 import History from "./pages/History";
+import Notifications from "./pages/Notifications";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -24,7 +25,8 @@ function Router() {
       <Route path={"/webhooks"} component={Webhooks} />
       <Route path={"/search"} component={Search} />
       <Route path={"/export"} component={Export} />
-      <Route path={"/history"} component={History} />
+        <Route path="/history" component={History} />
+        <Route path="/notifications" component={Notifications} />
       <Route path={"/settings"} component={Settings} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

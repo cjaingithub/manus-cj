@@ -37,6 +37,7 @@ const navItems: NavItem[] = [
   { label: "Search", href: "/search", icon: <Search className="w-4 h-4" /> },
   { label: "Templates", href: "/templates", icon: <FileText className="w-4 h-4" /> },
   { label: "History", href: "/history", icon: <Clock className="w-4 h-4" /> },
+  { label: "Notifications", href: "/notifications", icon: <Bell className="w-4 h-4" /> },
   { label: "Webhooks", href: "/webhooks", icon: <Webhook className="w-4 h-4" /> },
   { label: "Export", href: "/export", icon: <FileText className="w-4 h-4" /> },
   { label: "Settings", href: "/settings", icon: <Settings className="w-4 h-4" /> },

@@ -141,3 +141,44 @@
 - [x] Add notification icons and color coding
 - [x] Integrate with DashboardNav header
 - [x] Write and pass unit tests for notifications
+
+## WebSocket Real-Time Notifications
+- [ ] Integrate WebSocket for pushing notifications to clients
+- [ ] Add notification broadcast on task status changes
+- [ ] Implement client-side WebSocket listener for notifications
+- [ ] Add reconnection logic for WebSocket
+
+## Dedicated Notifications Page
+- [ ] Create Notifications page component
+- [ ] Add advanced filtering (type, priority, date range, read status)
+- [ ] Implement search across notification messages
+- [ ] Add bulk actions (mark as read, dismiss, delete)
+- [ ] Show notification statistics and trends
+
+## Notification Preferences
+- [ ] Add notification preferences table to schema
+- [ ] Create preferences UI in Settings page
+- [ ] Implement notification type toggles
+- [ ] Add quiet hours configuration
+- [ ] Add email digest preferences
+
+## Advanced Task Retry Logic
+- [ ] Implement exponential backoff for failed tasks
+- [ ] Add circuit breaker pattern for tool execution
+- [ ] Create retry policy configuration
+- [ ] Add task retry history tracking
+- [ ] Implement fallback execution strategies
+
+## Advanced Logging & Debugging
+- [ ] Create debug logs table for detailed execution traces
+- [ ] Implement structured logging with context
+- [ ] Add performance metrics collection
+- [ ] Create debug dashboard for viewing logs
+- [ ] Add export logs functionality
+
+## Production Readiness
+- [ ] Add rate limiting for API endpoints
+- [ ] Implement request validation middleware
+- [ ] Add CORS security headers
+- [ ] Create monitoring alerts system
+- [ ] Add health check endpoint
