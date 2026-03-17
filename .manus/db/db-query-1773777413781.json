@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `auditLogs` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`action` varchar(255) NOT NULL,\n\t`resource` varchar(255) NOT NULL,\n\t`resourceId` int,\n\t`changes` text,\n\t`ipAddress` varchar(45),\n\t`userAgent` text,\n\t`status` enum('success','failure','partial') NOT NULL DEFAULT 'success',\n\t`errorMessage` text,\n\t`metadata` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `auditLogs_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `auditLogs` ADD CONSTRAINT `auditLogs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BzzrpmkXEFCpC8.root --database 6SDCrjpBeREuAKzWQSYLjr --execute CREATE TABLE `auditLogs` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`action` varchar(255) NOT NULL,\n\t`resource` varchar(255) NOT NULL,\n\t`resourceId` int,\n\t`changes` text,\n\t`ipAddress` varchar(45),\n\t`userAgent` text,\n\t`status` enum('success','failure','partial') NOT NULL DEFAULT 'success',\n\t`errorMessage` text,\n\t`metadata` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `auditLogs_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `auditLogs` ADD CONSTRAINT `auditLogs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1113
+}

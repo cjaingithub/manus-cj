@@ -14,6 +14,7 @@ import { notificationPreferencesRouter } from "./routers/notificationPreferences
 import { taskRetryRouter } from "./routers/taskRetry";
 import { analyticsRouter } from "./routers/analytics";
 import { healthRouter } from "./routers/health";
+import { auditRouter } from "./routers/audit";
 
 export const appRouter = router({
   system: systemRouter,
@@ -29,6 +30,7 @@ export const appRouter = router({
   taskRetry: taskRetryRouter,
   analytics: analyticsRouter,
   health: healthRouter,
+  audit: auditRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

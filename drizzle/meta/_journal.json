@@ -57,6 +57,13 @@
       "when": 1773776518552,
       "tag": "0007_workable_nicolaos",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1773777399286,
+      "tag": "0008_elite_riptide",
+      "breakpoints": true
     }
   ]
 }

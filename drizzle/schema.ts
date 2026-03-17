@@ -272,3 +272,24 @@ export const taskRetryHistory = mysqlTable("taskRetryHistory", {
 
 export type TaskRetryHistory = typeof taskRetryHistory.$inferSelect;
 export type InsertTaskRetryHistory = typeof taskRetryHistory.$inferInsert;
+
+/**
+ * Audit Logs table - Tracks all user actions and API calls
+ */
+export const auditLogs = mysqlTable("auditLogs", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  action: varchar("action", { length: 255 }).notNull(), // e.g., "task.create", "task.update", "task.delete"
+  resource: varchar("resource", { length: 255 }).notNull(), // e.g., "task", "notification", "user"
+  resourceId: int("resourceId"), // ID of the affected resource
+  changes: text("changes"), // JSON object with before/after values
+  ipAddress: varchar("ipAddress", { length: 45 }), // IPv4 or IPv6
+  userAgent: text("userAgent"), // Browser/client information
+  status: mysqlEnum("status", ["success", "failure", "partial"]).default("success").notNull(),
+  errorMessage: text("errorMessage"), // Error details if status is failure
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type InsertAuditLog = typeof auditLogs.$inferInsert;
