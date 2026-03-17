@@ -56,10 +56,10 @@
 ## Testing & Validation
 - [ ] Write unit tests for agent loop
 - [x] Write tests for tool registry and execution
-- [ ] Write tests for checkpoint/recovery system
-- [ ] Write tests for error handling
-- [ ] Create integration tests for WebSocket communication
-- [ ] Test long-running task scenarios
+- [x] Write tests for checkpoint/recovery system
+- [x] Write tests for error handling
+- [x] Create integration tests for WebSocket communication
+- [x] Test long-running task scenarios
 
 ## Advanced Search & Filtering
 - [x] Implement full-text search across task titles
