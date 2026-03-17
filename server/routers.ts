@@ -17,6 +17,7 @@ import { healthRouter } from "./routers/health";
 import { auditRouter } from "./routers/audit";
 import { apiKeysRouter } from "./routers/apiKeys";
 import { adminRouter } from "./routers/admin";
+import { dataExportRouter } from "./routers/dataExport";
 
 export const appRouter = router({
   system: systemRouter,
@@ -35,6 +36,7 @@ export const appRouter = router({
   audit: auditRouter,
   apiKeys: apiKeysRouter,
   admin: adminRouter,
+  dataExport: dataExportRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
