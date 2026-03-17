@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `tokenUsageLogs` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`taskId` int,\n\t`userId` int NOT NULL,\n\t`model` varchar(128) NOT NULL,\n\t`promptTokens` int NOT NULL,\n\t`completionTokens` int NOT NULL,\n\t`totalTokens` int NOT NULL,\n\t`estimatedCost` decimal(10,8) NOT NULL,\n\t`finishReason` varchar(64),\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `tokenUsageLogs_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `tokenUsageLogs` ADD CONSTRAINT `tokenUsageLogs_taskId_tasks_id_fk` FOREIGN KEY (`taskId`) REFERENCES `tasks`(`id`) ON DELETE no action ON UPDATE no action;\nALTER TABLE `tokenUsageLogs` ADD CONSTRAINT `tokenUsageLogs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BzzrpmkXEFCpC8.root --database 6SDCrjpBeREuAKzWQSYLjr --execute CREATE TABLE `tokenUsageLogs` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`taskId` int,\n\t`userId` int NOT NULL,\n\t`model` varchar(128) NOT NULL,\n\t`promptTokens` int NOT NULL,\n\t`completionTokens` int NOT NULL,\n\t`totalTokens` int NOT NULL,\n\t`estimatedCost` decimal(10,8) NOT NULL,\n\t`finishReason` varchar(64),\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `tokenUsageLogs_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `tokenUsageLogs` ADD CONSTRAINT `tokenUsageLogs_taskId_tasks_id_fk` FOREIGN KEY (`taskId`) REFERENCES `tasks`(`id`) ON DELETE no action ON UPDATE no action;\nALTER TABLE `tokenUsageLogs` ADD CONSTRAINT `tokenUsageLogs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1685
+}

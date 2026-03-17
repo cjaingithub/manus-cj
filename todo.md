@@ -24,7 +24,7 @@
 ## WebSocket & Real-Time Communication
 - [x] Set up WebSocket server with Socket.io or native WebSocket
 - [x] Implement message types for agent thoughts, tool execution, progress
-- [ ] Create streaming response handler for Hunter Alpha outputs
+- [x] Create streaming response handler for Hunter Alpha outputs
 - [x] Build real-time state synchronization between server and client
 - [x] Implement connection management and reconnection logic
 
@@ -49,9 +49,9 @@
 ## Hunter Alpha Integration
 - [x] Set up OpenRouter API client with Hunter Alpha model
 - [x] Create prompt templates for planning and analysis
-- [ ] Implement streaming response handling
+- [x] Implement streaming response handling
 - [x] Build context window management (1M token limit)
-- [ ] Add token usage tracking
+- [x] Add token usage tracking
 
 ## Testing & Validation
 - [ ] Write unit tests for agent loop

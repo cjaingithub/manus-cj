@@ -37,6 +37,9 @@ interface PerformanceMetrics {
 
 export default function Analytics() {
   const { data: tasks, isLoading: tasksLoading } = trpc.agent.listTasks.useQuery({});
+  const { data: tokenStats } = trpc.tokenUsage.getStats.useQuery({ days: 30 });
+  const { data: costBreakdown } = trpc.tokenUsage.getCostBreakdown.useQuery();
+  const { data: totalCost } = trpc.tokenUsage.getTotalCost.useQuery();
 
 
   // Calculate aggregate metrics

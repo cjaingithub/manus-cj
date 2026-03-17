@@ -1,4 +1,4 @@
-import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, decimal, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -182,3 +182,22 @@ export const templateUsageLogs = mysqlTable("templateUsageLogs", {
 
 export type TemplateUsageLog = typeof templateUsageLogs.$inferSelect;
 export type InsertTemplateUsageLog = typeof templateUsageLogs.$inferInsert;
+
+/**
+ * Token usage tracking table - Monitor LLM token consumption and costs
+ */
+export const tokenUsageLogs = mysqlTable("tokenUsageLogs", {
+  id: int("id").autoincrement().primaryKey(),
+  taskId: int("taskId").references(() => tasks.id),
+  userId: int("userId").notNull().references(() => users.id),
+  model: varchar("model", { length: 128 }).notNull(), // e.g., "openrouter/hunter-alpha", "gpt-4"
+  promptTokens: int("promptTokens").notNull(),
+  completionTokens: int("completionTokens").notNull(),
+  totalTokens: int("totalTokens").notNull(),
+  estimatedCost: decimal("estimatedCost", { precision: 10, scale: 8 }).notNull(), // USD cost
+  finishReason: varchar("finishReason", { length: 64 }), // "stop", "length", "content_filter", etc.
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type TokenUsageLog = typeof tokenUsageLogs.$inferSelect;
+export type InsertTokenUsageLog = typeof tokenUsageLogs.$inferInsert;
