@@ -8,6 +8,7 @@ import { webhookRouter } from "./routers/webhooks";
 import { templatesRouter } from "./routers/templates";
 import { tokenUsageRouter } from "./routers/tokenUsage";
 import { searchRouter } from "./routers/search";
+import { historyRouter } from "./routers/history";
 
 export const appRouter = router({
   system: systemRouter,
@@ -17,6 +18,7 @@ export const appRouter = router({
   templates: templatesRouter,
   tokenUsage: tokenUsageRouter,
   search: searchRouter,
+  history: historyRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

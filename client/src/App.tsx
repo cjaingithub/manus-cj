@@ -5,12 +5,14 @@ import Settings from "@/pages/Settings";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import DashboardNav from "./components/DashboardNav";
 import Home from "./pages/Home";
 import Templates from "./pages/Templates";
 import Analytics from "./pages/Analytics";
 import Webhooks from "./pages/Webhooks";
 import Search from "./pages/Search";
 import Export from "./pages/Export";
+import History from "./pages/History";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,6 +24,7 @@ function Router() {
       <Route path={"/webhooks"} component={Webhooks} />
       <Route path={"/search"} component={Search} />
       <Route path={"/export"} component={Export} />
+      <Route path={"/history"} component={History} />
       <Route path={"/settings"} component={Settings} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
@@ -44,6 +47,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
+          <DashboardNav />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
