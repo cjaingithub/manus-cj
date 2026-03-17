@@ -203,6 +203,15 @@
 - [ ] Create debug dashboard for viewing logs
 - [ ] Add export logs functionality
 
+## Health Check Endpoint
+- [x] Create health check service with database, cache, and API checks
+- [x] Implement system metrics collection (memory, CPU, connections)
+- [x] Create health check router with 8 tRPC procedures
+- [x] Add Kubernetes-ready liveness and readiness endpoints
+- [x] Implement health check caching (5-second window)
+- [x] Create 21 comprehensive tests for health check service
+- [x] All 122 tests passing
+
 ## Production Readiness
 - [ ] Add rate limiting for API endpoints
 - [ ] Implement request validation middleware
