@@ -41,7 +41,7 @@
 - [x] Build task execution visualization component
 - [x] Implement phase progress indicator
 - [x] Create tool execution status display
-- [ ] Build context viewer for current state
+- [x] Build analytics dashboard with charts
 - [x] Add markdown rendering for agent thoughts
 - [x] Implement code syntax highlighting
 - [x] Create pause/resume/abort controls
