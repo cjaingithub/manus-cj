@@ -298,3 +298,33 @@
 - [x] Add export statistics and analytics
 - [x] Create 29 comprehensive tests for data exporter
 - [x] All 260 tests passing
+
+
+## Frontend Export UI Component
+- [ ] Create ExportManager component for Settings page
+- [ ] Implement export format selector (JSON/CSV)
+- [ ] Add data type selector (audit logs, users, tasks, notifications)
+- [ ] Implement date range picker for filtering
+- [ ] Add download button with loading state
+- [ ] Display export history table
+- [ ] Add recurring export configuration UI
+- [ ] Implement export statistics dashboard
+- [ ] Add export preview functionality
+
+## API Documentation and OpenAPI Support
+- [x] Create OpenAPI/Swagger documentation
+- [x] Generate API schema from tRPC routers
+- [x] Create interactive API documentation UI
+- [x] Add endpoint descriptions and examples
+- [x] Document authentication and authorization
+- [x] Create API client SDK generation
+- [x] Add rate limiting documentation
+- [x] Document webhook events and payloads
+- [x] Create API migration guides
+- [x] Create OpenAPI generator service
+- [x] Create API docs router with 12 procedures
+- [x] Generate HTML documentation with Redoc
+- [x] Generate TypeScript client SDK
+- [x] Generate API reference markdown
+- [x] Create 39 comprehensive tests for API docs
+- [x] All 299 tests passing
