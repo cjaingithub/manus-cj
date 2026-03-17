@@ -61,6 +61,15 @@
 - [ ] Create integration tests for WebSocket communication
 - [ ] Test long-running task scenarios
 
+## Advanced Search & Filtering
+- [x] Implement full-text search across task titles
+- [x] Implement date range filtering
+- [x] Implement status-based filtering
+- [x] Implement sorting by creation date, update date, duration
+- [x] Create search suggestions from recent queries
+- [x] Create task statistics dashboard
+- [x] Create advanced search UI page
+
 ## Advanced Features
 - [x] Implement task scheduler with cron support
 - [x] Add background job processing
