@@ -106,10 +106,10 @@ export const auditRouter = router({
         action: z.string(),
         resource: z.string(),
         resourceId: z.number().optional(),
-        changes: z.record(z.any()).optional(),
+        changes: z.record(z.string(), z.unknown()).optional(),
         status: z.enum(["success", "failure", "partial"]).default("success"),
         errorMessage: z.string().optional(),
-        metadata: z.record(z.any()).optional(),
+        metadata: z.record(z.string(), z.unknown()).optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {

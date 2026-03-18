@@ -95,7 +95,7 @@ export const taskRetryRouter = router({
         success: z.boolean(),
         error: z.string().optional(),
         delayMs: z.number().optional(),
-        metadata: z.record(z.any()).optional(),
+        metadata: z.record(z.string(), z.unknown()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
