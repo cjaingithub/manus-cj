@@ -27,18 +27,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Storage keys
+  const USER_STORAGE_KEY = "hunter_user";
+  const TOKEN_STORAGE_KEY = "hunter_auth_token";
+  const REFRESH_TOKEN_STORAGE_KEY = "hunter_refresh_token";
+
   // Load auth state from localStorage on mount
   useEffect(() => {
     const loadAuthState = () => {
       try {
-        const storedUser = localStorage.getItem(
-          process.env.VITE_USER_STORAGE_KEY || "hunter_user"
-        );
-        const storedAccessToken = localStorage.getItem(
-          process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token"
-        );
+        const storedUser = localStorage.getItem(USER_STORAGE_KEY);
+        const storedAccessToken = localStorage.getItem(TOKEN_STORAGE_KEY);
         const storedRefreshToken = localStorage.getItem(
-          process.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token"
+          REFRESH_TOKEN_STORAGE_KEY
         );
 
         if (storedUser && storedAccessToken) {
@@ -49,15 +50,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("Failed to load auth state:", error);
         // Clear invalid auth data
-        localStorage.removeItem(
-          process.env.VITE_USER_STORAGE_KEY || "hunter_user"
-        );
-        localStorage.removeItem(
-          process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token"
-        );
-        localStorage.removeItem(
-          process.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token"
-        );
+        localStorage.removeItem(USER_STORAGE_KEY);
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
       } finally {
         setIsLoading(false);
       }
@@ -72,18 +67,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setRefreshToken(newRefreshToken);
 
     // Persist to localStorage
-    localStorage.setItem(
-      process.env.VITE_USER_STORAGE_KEY || "hunter_user",
-      JSON.stringify(newUser)
-    );
-    localStorage.setItem(
-      process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token",
-      newAccessToken
-    );
-    localStorage.setItem(
-      process.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token",
-      newRefreshToken
-    );
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(newUser));
+    localStorage.setItem(TOKEN_STORAGE_KEY, newAccessToken);
+    localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, newRefreshToken);
   };
 
   const logout = () => {
@@ -92,23 +78,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setRefreshToken(null);
 
     // Clear localStorage
-    localStorage.removeItem(
-      process.env.VITE_USER_STORAGE_KEY || "hunter_user"
-    );
-    localStorage.removeItem(
-      process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token"
-    );
-    localStorage.removeItem(
-      process.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token"
-    );
+    localStorage.removeItem(USER_STORAGE_KEY);
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
   };
 
   const updateAccessToken = (newAccessToken: string) => {
     setAccessToken(newAccessToken);
-    localStorage.setItem(
-      process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token",
-      newAccessToken
-    );
+    localStorage.setItem(TOKEN_STORAGE_KEY, newAccessToken);
   };
 
   const value: AuthContextType = {
