@@ -419,3 +419,83 @@ export const memoryIndex = mysqlTable("memoryIndex", {
 
 export type MemoryIndex = typeof memoryIndex.$inferSelect;
 export type InsertMemoryIndex = typeof memoryIndex.$inferInsert;
+
+/**
+ * Performance Metrics table - Tracks execution performance and resource usage
+ */
+export const performanceMetrics = mysqlTable("performanceMetrics", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  taskId: int("taskId").notNull().references(() => tasks.id),
+  // Execution timing
+  startTime: timestamp("startTime").notNull(),
+  endTime: timestamp("endTime"),
+  duration: int("duration").notNull(), // milliseconds
+  // Resource usage
+  cpuUsagePercent: decimal("cpuUsagePercent", { precision: 5, scale: 2 }), // 0-100
+  memoryUsageMB: int("memoryUsageMB"), // Memory in MB
+  peakMemoryMB: int("peakMemoryMB"), // Peak memory usage
+  // Throughput metrics
+  itemsProcessed: int("itemsProcessed").default(0).notNull(),
+  itemsPerSecond: decimal("itemsPerSecond", { precision: 10, scale: 2 }), // throughput
+  // Quality metrics
+  successRate: int("successRate").default(100).notNull(), // 0-100 percentage
+  errorCount: int("errorCount").default(0).notNull(),
+  retryCount: int("retryCount").default(0).notNull(),
+  // Metadata
+  executionPhase: varchar("executionPhase", { length: 64 }), // "planning", "executing", "analyzing"
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PerformanceMetric = typeof performanceMetrics.$inferSelect;
+export type InsertPerformanceMetric = typeof performanceMetrics.$inferInsert;
+
+/**
+ * Budget Configuration table - User spending limits and alerts
+ */
+export const budgetConfigurations = mysqlTable("budgetConfigurations", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  // Budget settings
+  monthlyBudgetUSD: decimal("monthlyBudgetUSD", { precision: 10, scale: 2 }).notNull(),
+  alertThresholdPercent: int("alertThresholdPercent").default(80).notNull(), // Alert at 80% usage
+  hardLimitPercent: int("hardLimitPercent").default(100).notNull(), // Hard limit at 100%
+  // Alert preferences
+  emailAlertEnabled: boolean("emailAlertEnabled").default(true).notNull(),
+  slackAlertEnabled: boolean("slackAlertEnabled").default(false).notNull(),
+  slackWebhookUrl: varchar("slackWebhookUrl", { length: 2048 }),
+  // Tracking
+  currentMonthSpent: decimal("currentMonthSpent", { precision: 10, scale: 8 }).default("0").notNull(),
+  lastAlertSentAt: timestamp("lastAlertSentAt"),
+  // Metadata
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BudgetConfiguration = typeof budgetConfigurations.$inferSelect;
+export type InsertBudgetConfiguration = typeof budgetConfigurations.$inferInsert;
+
+/**
+ * Budget Alerts table - History of budget alerts sent to users
+ */
+export const budgetAlerts = mysqlTable("budgetAlerts", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  // Alert details
+  alertType: mysqlEnum("alertType", ["warning", "critical", "limit_exceeded"]).notNull(),
+  spentAmount: decimal("spentAmount", { precision: 10, scale: 8 }).notNull(),
+  budgetLimit: decimal("budgetLimit", { precision: 10, scale: 2 }).notNull(),
+  percentageUsed: int("percentageUsed").notNull(), // 0-100
+  // Alert delivery
+  emailSent: boolean("emailSent").default(false).notNull(),
+  slackSent: boolean("slackSent").default(false).notNull(),
+  // Metadata
+  message: text("message"),
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BudgetAlert = typeof budgetAlerts.$inferSelect;
+export type InsertBudgetAlert = typeof budgetAlerts.$inferInsert;
