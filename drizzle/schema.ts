@@ -1,4 +1,4 @@
-import { boolean, decimal, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, decimal, index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -295,3 +295,26 @@ export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
 
 
+
+
+/**
+ * Debug Logs table - Detailed execution traces for debugging and monitoring
+ */
+export const debugLogs = mysqlTable("debugLogs", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  taskId: int("taskId").references(() => tasks.id), // null for system logs
+  level: mysqlEnum("level", ["trace", "debug", "info", "warn", "error", "fatal"]).default("info").notNull(),
+  category: varchar("category", { length: 64 }).notNull(), // e.g., "agent", "tool", "database", "api"
+  message: text("message").notNull(),
+  context: text("context"), // JSON object with contextual data
+  stackTrace: text("stackTrace"), // Error stack trace if applicable
+  duration: int("duration"), // Execution duration in milliseconds
+  metadata: text("metadata"), // Additional JSON data
+  source: varchar("source", { length: 255 }), // File/function that generated the log
+  lineNumber: int("lineNumber"), // Line number in source file
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type DebugLog = typeof debugLogs.$inferSelect;
+export type InsertDebugLog = typeof debugLogs.$inferInsert;
