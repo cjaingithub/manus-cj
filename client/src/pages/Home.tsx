@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,11 +7,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Play, Pause, RotateCcw, Trash2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { getLoginUrl } from "@/const";
+import { useLocation } from "wouter";
 import TaskExecutionView from "@/components/TaskExecutionView";
 
 export default function Home() {
-  const { user, loading: authLoading, isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const [, navigate] = useLocation();
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
@@ -86,11 +87,13 @@ export default function Home() {
           <p className="text-lg text-muted-foreground mb-8">
             Autonomous task execution with full observability and recovery
           </p>
-          <a href={getLoginUrl()}>
-            <Button size="lg" className="w-full">
-              Sign In to Get Started
-            </Button>
-          </a>
+          <Button
+            size="lg"
+            className="w-full"
+            onClick={() => navigate("/login")}
+          >
+            Sign In to Get Started
+          </Button>
         </div>
       </div>
     );

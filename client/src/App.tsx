@@ -5,7 +5,11 @@ import Settings from "@/pages/Settings";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import DashboardNav from "./components/DashboardNav";
+import { Login } from "./components/Login";
+import { Register } from "./components/Register";
 import Home from "./pages/Home";
 import Templates from "./pages/Templates";
 import Analytics from "./pages/Analytics";
@@ -16,20 +20,72 @@ import History from "./pages/History";
 import Notifications from "./pages/Notifications";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
+  const { isAuthenticated, isLoading } = useAuth();
+
+  // Show nothing while checking authentication
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/templates"} component={Templates} />
-      <Route path={"/analytics"} component={Analytics} />
-      <Route path={"/webhooks"} component={Webhooks} />
-      <Route path={"/search"} component={Search} />
-      <Route path={"/export"} component={Export} />
-        <Route path="/history" component={History} />
-        <Route path="/notifications" component={Notifications} />
-      <Route path={"/settings"} component={Settings} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      {/* Public routes */}
+      <Route path="/login">
+        {!isAuthenticated ? <Login /> : <Home />}
+      </Route>
+      <Route path="/register">
+        {!isAuthenticated ? <Register /> : <Home />}
+      </Route>
+
+      {/* Protected routes */}
+      <Route path="/">
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/templates">
+        <ProtectedRoute>
+          <Templates />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/analytics">
+        <ProtectedRoute>
+          <Analytics />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/webhooks">
+        <ProtectedRoute>
+          <Webhooks />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/search">
+        <ProtectedRoute>
+          <Search />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/export">
+        <ProtectedRoute>
+          <Export />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/history">
+        <ProtectedRoute>
+          <History />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/notifications">
+        <ProtectedRoute>
+          <Notifications />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/settings">
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
+      </Route>
+
+      {/* 404 route */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -43,16 +99,18 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <DashboardNav />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider
+          defaultTheme="light"
+          // switchable
+        >
+          <TooltipProvider>
+            <Toaster />
+            <DashboardNav />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
