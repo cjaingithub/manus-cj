@@ -19,8 +19,10 @@ import { apiKeysRouter } from "./routers/apiKeys";
 import { adminRouter } from "./routers/admin";
 import { dataExportRouter } from "./routers/dataExport";
 import { apiDocsRouter } from "./routers/apiDocs";
+import { customAuthRouter } from "./routers/customAuthRouter";
 
 export const appRouter = router({
+  customAuth: customAuthRouter,
   system: systemRouter,
   export: exportRouter,
   agent: agentRouter,
