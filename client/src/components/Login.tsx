@@ -22,15 +22,15 @@ export function Login({ onSuccess }: LoginProps) {
     onSuccess: (data) => {
       // Store tokens in localStorage
       localStorage.setItem(
-        process.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token",
+        import.meta.env.VITE_TOKEN_STORAGE_KEY || "hunter_auth_token",
         data.tokens.accessToken
       );
       localStorage.setItem(
-        process.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token",
+        import.meta.env.VITE_REFRESH_TOKEN_STORAGE_KEY || "hunter_refresh_token",
         data.tokens.refreshToken
       );
       localStorage.setItem(
-        process.env.VITE_USER_STORAGE_KEY || "hunter_user",
+        import.meta.env.VITE_USER_STORAGE_KEY || "hunter_user",
         JSON.stringify(data.user)
       );
 
