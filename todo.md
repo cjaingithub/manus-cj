@@ -97,11 +97,11 @@
 - [x] Add download functionality
 
 ## Nice-to-Have Features
-- [ ] Memory hierarchy (working, episodic, semantic)
-- [ ] Token usage dashboard and cost tracking
+- [x] Memory hierarchy (working, episodic, semantic)
+- [x] Token usage dashboard and cost tracking
 - [ ] Performance benchmarking system
-- [ ] Task history and analytics
-- [ ] Parallel task execution
+- [x] Task history and analytics
+- [x] Parallel task execution
 - [ ] Advanced visualization with D3.js
 
 ## Email Notifications
@@ -328,3 +328,35 @@
 - [x] Generate API reference markdown
 - [x] Create 39 comprehensive tests for API docs
 - [x] All 299 tests passing
+
+## Token Usage Dashboard
+- [x] Create TokenUsageDashboard component for visualizing token consumption
+- [x] Integrate token usage router with 5 tRPC procedures (log, getStats, getLogs, getCostBreakdown, getTotalCost)
+- [x] Add token tracking service with cost calculation and aggregation
+- [x] Implement cost breakdown by model visualization
+- [x] Add recent activity logs with pagination
+- [x] Create trend analysis (token and cost trends)
+- [x] Add navigation link to Token Usage page
+- [ ] Write unit tests for token usage dashboard
+
+## Memory Hierarchy System
+- [x] Create working memory table for short-term task context
+- [x] Create episodic memory table for task-specific events
+- [x] Create semantic memory table for learned patterns and knowledge
+- [x] Create memory index table for fast retrieval
+- [x] Implement MemoryManager service with 3-tier hierarchy
+- [x] Implement memory consolidation from working to episodic to semantic
+- [x] Create memory router with 11 tRPC procedures
+- [x] Implement memory search and retrieval optimization
+- [x] Add memory cleanup for expired working memory
+
+## Parallel Task Execution
+- [x] Create ParallelExecutor service with resource pooling
+- [x] Implement concurrent task execution with configurable limits
+- [x] Add exponential backoff retry logic for failed tasks
+- [x] Implement task priority queue (high, normal, low)
+- [x] Create failure isolation and error handling
+- [x] Create parallel execution router with 7 tRPC procedures
+- [x] Implement pool statistics and monitoring
+- [x] Add support for multiple resource pools
+- [x] Implement task timeout handling

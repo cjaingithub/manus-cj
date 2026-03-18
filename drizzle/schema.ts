@@ -318,3 +318,104 @@ export const debugLogs = mysqlTable("debugLogs", {
 
 export type DebugLog = typeof debugLogs.$inferSelect;
 export type InsertDebugLog = typeof debugLogs.$inferInsert;
+
+/**
+ * Working Memory table - Short-term context for current task execution
+ * Stores immediate execution state, current goal, and active tool results
+ */
+export const workingMemory = mysqlTable("workingMemory", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  taskId: int("taskId").notNull().references(() => tasks.id),
+  // Current execution context
+  currentGoal: text("currentGoal"), // Current objective being worked on
+  currentPhase: varchar("currentPhase", { length: 64 }), // Current execution phase
+  activeTools: text("activeTools"), // JSON array of tools in use
+  recentResults: text("recentResults"), // JSON object with recent tool results
+  contextWindow: text("contextWindow"), // JSON array of recent messages/events
+  metadata: text("metadata"), // Additional JSON data
+  expiresAt: timestamp("expiresAt"), // Auto-expire old working memory
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WorkingMemory = typeof workingMemory.$inferSelect;
+export type InsertWorkingMemory = typeof workingMemory.$inferInsert;
+
+/**
+ * Episodic Memory table - Task-specific events and execution history
+ * Stores completed tasks, tool executions, and significant events
+ */
+export const episodicMemory = mysqlTable("episodicMemory", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  taskId: int("taskId").references(() => tasks.id), // null for system events
+  // Event details
+  eventType: varchar("eventType", { length: 64 }).notNull(), // "task_completed", "tool_executed", "error_occurred", etc.
+  description: text("description").notNull(), // Human-readable event description
+  outcome: varchar("outcome", { length: 64 }), // "success", "failure", "partial", etc.
+  details: text("details"), // JSON object with event-specific details
+  duration: int("duration"), // Duration in milliseconds
+  // Context and relationships
+  relatedTaskIds: text("relatedTaskIds"), // JSON array of related task IDs
+  tags: text("tags"), // JSON array of tags for categorization
+  importance: mysqlEnum("importance", ["low", "normal", "high", "critical"]).default("normal").notNull(),
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type EpisodicMemory = typeof episodicMemory.$inferSelect;
+export type InsertEpisodicMemory = typeof episodicMemory.$inferInsert;
+
+/**
+ * Semantic Memory table - General knowledge and learned patterns
+ * Stores reusable knowledge, patterns, and generalizations
+ */
+export const semanticMemory = mysqlTable("semanticMemory", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  // Knowledge classification
+  category: varchar("category", { length: 128 }).notNull(), // "tool_usage", "pattern", "solution", "error_handling", etc.
+  key: varchar("key", { length: 255 }).notNull(), // Unique identifier for this knowledge
+  // Knowledge content
+  content: text("content").notNull(), // The actual knowledge/pattern
+  description: text("description"), // Human-readable description
+  // Metadata
+  confidence: int("confidence").default(50).notNull(), // 0-100 confidence score
+  usageCount: int("usageCount").default(0).notNull(), // How many times this knowledge was used
+  successRate: int("successRate").default(0).notNull(), // 0-100 success rate when applied
+  // Relationships
+  relatedKeys: text("relatedKeys"), // JSON array of related knowledge keys
+  tags: text("tags"), // JSON array of tags
+  metadata: text("metadata"), // Additional JSON data
+  lastUsedAt: timestamp("lastUsedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SemanticMemory = typeof semanticMemory.$inferSelect;
+export type InsertSemanticMemory = typeof semanticMemory.$inferInsert;
+
+/**
+ * Memory Retrieval Index - Fast lookup for memory queries
+ * Stores embeddings and search indices for efficient memory retrieval
+ */
+export const memoryIndex = mysqlTable("memoryIndex", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  // Reference to memory entry
+  memoryType: varchar("memoryType", { length: 32 }).notNull(), // "working", "episodic", "semantic"
+  memoryId: int("memoryId").notNull(), // ID of the memory entry
+  // Search optimization
+  searchText: text("searchText"), // Indexed text for full-text search
+  category: varchar("category", { length: 128 }), // Category for filtering
+  relevanceScore: int("relevanceScore").default(50).notNull(), // 0-100 relevance score
+  // Embedding (for vector similarity search)
+  embedding: text("embedding"), // JSON array of embedding values (optional)
+  metadata: text("metadata"), // Additional JSON data
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MemoryIndex = typeof memoryIndex.$inferSelect;
+export type InsertMemoryIndex = typeof memoryIndex.$inferInsert;

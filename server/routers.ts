@@ -20,6 +20,8 @@ import { adminRouter } from "./routers/admin";
 import { dataExportRouter } from "./routers/dataExport";
 import { apiDocsRouter } from "./routers/apiDocs";
 import { customAuthRouter } from "./routers/customAuthRouter";
+import { memoryRouter } from "./routers/memory";
+import { parallelExecutionRouter } from "./routers/parallelExecution";
 
 export const appRouter = router({
   customAuth: customAuthRouter,
@@ -41,6 +43,8 @@ export const appRouter = router({
   admin: adminRouter,
   dataExport: dataExportRouter,
   apiDocs: apiDocsRouter,
+  memory: memoryRouter,
+  parallelExecution: parallelExecutionRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

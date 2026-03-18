@@ -18,6 +18,7 @@ import Search from "./pages/Search";
 import Export from "./pages/Export";
 import History from "./pages/History";
 import Notifications from "./pages/Notifications";
+import TokenUsageDashboard from "./pages/TokenUsageDashboard";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -76,6 +77,11 @@ function Router() {
       <Route path="/notifications">
         <ProtectedRoute>
           <Notifications />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/token-usage">
+        <ProtectedRoute>
+          <TokenUsageDashboard />
         </ProtectedRoute>
       </Route>
       <Route path="/settings">
