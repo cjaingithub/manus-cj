@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, CheckCircle2, Mail, Bell, Key, Palette } from "lucide-react";
+import { AlertCircle, CheckCircle2, Mail, Bell, Key, Palette, DollarSign } from "lucide-react";
 import { toast } from "sonner";
+import { BudgetSettings } from "./BudgetSettings";
 
 export default function Settings() {
   const [email, setEmail] = useState("");
@@ -88,7 +89,7 @@ export default function Settings() {
 
       {/* Tabs */}
       <Tabs defaultValue="notifications" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="notifications" className="flex items-center gap-2">
             <Bell className="w-4 h-4" />
             Notifications
@@ -100,6 +101,10 @@ export default function Settings() {
           <TabsTrigger value="api" className="flex items-center gap-2">
             <Key className="w-4 h-4" />
             API Keys
+          </TabsTrigger>
+          <TabsTrigger value="budget" className="flex items-center gap-2">
+            <DollarSign className="w-4 h-4" />
+            Budget
           </TabsTrigger>
           <TabsTrigger value="account" className="flex items-center gap-2">
             <Mail className="w-4 h-4" />
@@ -331,6 +336,11 @@ export default function Settings() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Budget Tab */}
+        <TabsContent value="budget" className="space-y-4">
+          <BudgetSettings />
         </TabsContent>
 
         {/* Account Tab */}

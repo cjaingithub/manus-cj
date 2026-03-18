@@ -19,6 +19,7 @@ import Export from "./pages/Export";
 import History from "./pages/History";
 import Notifications from "./pages/Notifications";
 import TokenUsageDashboard from "./pages/TokenUsageDashboard";
+import { PerformanceDashboard } from "./pages/PerformanceDashboard";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -82,6 +83,11 @@ function Router() {
       <Route path="/token-usage">
         <ProtectedRoute>
           <TokenUsageDashboard />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/performance">
+        <ProtectedRoute>
+          <PerformanceDashboard />
         </ProtectedRoute>
       </Route>
       <Route path="/settings">
